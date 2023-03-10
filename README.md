@@ -44,4 +44,4 @@ python3 manage.py runserver
 Перейдите на http://127.0.0.1:8000/mainapp
 Логин и пароль: admin
 
-**Done! (bold)**
+**Done!**
