@@ -1,6 +1,7 @@
 from django.contrib import admin
-from authapp.models import AbstractUserModel
+from authapp import models
 
-@admin.register(AbstractUserModel)
+
+@admin.register(models.AbstractUserModel)
 class UserModelAdmin(admin.ModelAdmin):
-    list_display = ['id', 'username', 'email', 'is_staff', 'is_superuser', 'border_color', 'profile_background', 'balance']
+    list_display = ['id', 'username', 'email']

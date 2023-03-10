@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.views.generic import TemplateView 
 from authapp import forms, models
 from mainapp import models as mainapp_models
+
 
 class RegiserView(CreateView):
     model = get_user_model()

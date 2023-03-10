@@ -2,9 +2,13 @@ from django.views.generic import TemplateView
 from django.shortcuts import HttpResponseRedirect, HttpResponse
 from shopapp import models as shop_models
 from authapp import models as auth_models
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class Items(TemplateView):
+class LoginUrlUpdate(LoginRequiredMixin):
+    login_url = '/auth/login/'
+
+class Items(LoginUrlUpdate, TemplateView):
     template_name = "shopapp/shop.html"
 
     def get_context_data(self, **kwargs):
@@ -29,7 +33,7 @@ class Items(TemplateView):
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context)
     
-class UserItems(TemplateView):
+class UserItems(LoginUrlUpdate, TemplateView):
     template_name = "shopapp/user_items.html"
 
     def get_context_data(self, **kwargs):

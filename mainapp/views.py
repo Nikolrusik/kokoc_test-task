@@ -1,8 +1,13 @@
 from django.shortcuts import HttpResponseRedirect
 from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from mainapp import models as main_models
+from shopapp.views import LoginUrlUpdate
 
-class MainPage(TemplateView):
+
+
+
+class MainPage(LoginUrlUpdate, TemplateView):
     template_name = "mainapp/main.html"
     
     def get_context_data(self, **kwargs):
@@ -10,7 +15,7 @@ class MainPage(TemplateView):
         context['surveys'] = main_models.SurveyModel.objects.all()
         return context
     
-class SurveyPage(TemplateView):
+class SurveyPage(LoginUrlUpdate, TemplateView):
     template_name = "mainapp/pages/survey.html"
     
     def get_context_data(self, survey_id=None, quest_id=None, **kwargs):
@@ -51,7 +56,7 @@ class SurveyPage(TemplateView):
                 return HttpResponseRedirect(f'/mainapp/result/{completed_survey.id}')
 
 
-class ResultsPage(TemplateView):
+class ResultsPage(LoginUrlUpdate, TemplateView):
     template_name = "mainapp/pages/results.html"
 
     def get_context_data(self, id=None, **kwargs):
@@ -60,7 +65,7 @@ class ResultsPage(TemplateView):
         context['result'] = main_models.ResultModel.objects.filter(survey__id=id, user=self.request.user)
         return context
 
-class AllResultsPage(TemplateView):
+class AllResultsPage(LoginUrlUpdate, TemplateView):
     template_name = "mainapp/pages/all_results.html"
 
     def get_context_data(self, **kwargs):
