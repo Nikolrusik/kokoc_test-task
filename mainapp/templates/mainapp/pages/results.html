@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ survey.survey.name }} (Completed)
+{% endblock title %}
+{% block content %}
+ <h1>Данные опроса {{ survey.survey.name }}</h1>
+ <p class="lead"><b>Номер опроса:</b> #{{ survey.survey.id }}</p>
+ <p class="lead"><b>Вознаграждение:</b> {{ survey.survey.award }}</p>
+ <p class="lead"><b>Описание опроса:</b> {{ survey.survey.description }}</p>
+ <div class="answers">
+    
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Вопрос</th>
+                    <th>Ответ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in result %}
+                <tr>
+                    <td>{{ item.quest.quest }}</td>
+                    <td>{{ item.answer.answer }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+  
+ </div>
+{% endblock %}

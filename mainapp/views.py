@@ -50,11 +50,24 @@ class SurveyPage(TemplateView):
                     request.user.balance = request.user.balance + main_models.SurveyModel.objects.get(id=survey_id).award
                     request.user.save()
                 main_models.CompletedSurveyModel.objects.filter(user=request.user, survey__id=survey_id).update(status="COMPLETED")
-                return HttpResponseRedirect(f'/mainapp/result/{survey_id}')
+                return HttpResponseRedirect(f'/mainapp/result/{completed_survey.id}')
 
 
 class ResultsPage(TemplateView):
-    pass
+    template_name = "mainapp/pages/results.html"
 
+    def get_context_data(self, id=None, **kwargs):
+        context = super(ResultsPage, self).get_context_data(**kwargs)
+        context['survey'] = main_models.CompletedSurveyModel.objects.get(id=id)
+        context['result'] = main_models.ResultModel.objects.filter(survey__id=id, user=self.request.user)
+        return context
+
+class AllResultsPage(TemplateView):
+    template_name = "mainapp/pages/all_results.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(AllResultsPage, self).get_context_data(**kwargs)
+        context['results'] = main_models.CompletedSurveyModel.objects.filter(user=self.request.user)
+        return context
 
 
