@@ -69,5 +69,11 @@ class AllResultsPage(TemplateView):
         context = super(AllResultsPage, self).get_context_data(**kwargs)
         context['results'] = main_models.CompletedSurveyModel.objects.filter(user=self.request.user)
         return context
+    
+class Shop(TemplateView):
+    pass
+
+class MyItems(TemplateView):
+    pass
 
 

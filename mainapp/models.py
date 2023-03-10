@@ -18,14 +18,20 @@ class SurveyModel(models.Model):
         verbose_name="Question award",
         default=0.0
     )
+    def __str__(self):
+        return f"id: {self.id} | Опрос: {self.name}"
 
 class QuestionModel(models.Model):
     quest = models.TextField(verbose_name="Quest")
     survey = models.ForeignKey(SurveyModel, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f"id: {self.id} | вопрос: {self.quest}"
+
 class AnswerModel(models.Model):
     answer = models.TextField(verbose_name="Answer")
     quest = models.ForeignKey(QuestionModel, on_delete=models.CASCADE)
+
 
 class CompletedSurveyModel(models.Model):
     survey = models.ForeignKey(SurveyModel, on_delete=models.CASCADE)
