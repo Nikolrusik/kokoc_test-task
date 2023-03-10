@@ -11,7 +11,7 @@
     <title>{% block title %} Kokoc Group Test task {% endblock title %}</title>
 </head>
 
-<body>
+<body style="background: {% block background %} {% if user.is_anonymous != True %} {{ request.user.profile_background }} {% endif %} {% endblock %}">
     {% include 'includes/header.html' %}
     <div class="container-md">{% block content %} {% endblock content %}</div>
     <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>

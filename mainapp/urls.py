@@ -10,6 +10,4 @@ urlpatterns = [
     path("survey/<int:survey_id>/<int:quest_id>/", views.SurveyPage.as_view(), name="survey"),
     path("result/<int:id>/", views.ResultsPage.as_view(), name='result'),
     path("all_results/", views.AllResultsPage.as_view(), name="all_results"),
-    path("shop/", views.Shop.as_view(), name="shop"),
-    path("my_items/", views.MyItems.as_view(), name="my_items"),
 ]

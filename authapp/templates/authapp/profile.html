@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block background %}
+    {{ viewed_user.profile_background }}
+{% endblock background %}
+{% block title %}
+    {{ viewed_user.username }}
+{% endblock title %}
+{% block content %}
+ <h1>Никнейм пользователя: {{ viewed_user.username }}</h1>
+ <p class="lead" style="border: 2px solid {{ viewed_user.border_color }}"><b>Цвет рамки:</b> {{ viewed_user.border_color }}</p>
+ <p class="lead"><b>Цвет фона:</b> {{ viewed_user.profile_background }}</p>
+ <div class="surveys">
+    
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Провйденные тесты: </th>
+                <th>Всего: {{ surveys|length }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in surveys %}
+            <tr>
+                <td>{{ item.survey.name }}</td>
+                <td></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

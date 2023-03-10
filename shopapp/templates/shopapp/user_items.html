@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}
+  Мои раскраски
+{% endblock title %}
+{% block content %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Название</th>
+      <th scope="col">Тип</th>
+      <th scope="col">Цвет</th>
+      <th scope="col">#</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in user_items %}
+    <tr>
+      <th>{{ item.item.name }}</th>
+      <td>{{ item.type }}</td>
+      <td style="background: {{ item.color }};"></td>
+      <td>
+        {% if item.color == request.user.border_color %}
+          Активировано
+        {% elif item.color == request.user.profile_background %}
+          Активировано
+        {% else %}
+        <a href="{% url 'shopapp:user_items' %}?activate={{ item.id }}" class="btn btn-primary">Активировать</a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock content %}

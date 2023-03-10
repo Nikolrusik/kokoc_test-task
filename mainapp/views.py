@@ -1,8 +1,6 @@
 from django.shortcuts import HttpResponseRedirect
 from django.views.generic import TemplateView
-from django.db.models import F 
 from mainapp import models as main_models
-from authapp import models as auth_models
 
 class MainPage(TemplateView):
     template_name = "mainapp/main.html"
@@ -70,10 +68,5 @@ class AllResultsPage(TemplateView):
         context['results'] = main_models.CompletedSurveyModel.objects.filter(user=self.request.user)
         return context
     
-class Shop(TemplateView):
-    pass
-
-class MyItems(TemplateView):
-    pass
 
 

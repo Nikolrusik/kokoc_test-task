@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}
+  Список пользователей
+{% endblock title %}
+{% block content %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Никнейм</th>
+      <th scope="col">Цвет профиля</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in all_users %}
+    <tr style="border: 2px solid {{ item.border_color }}" onclick="document.location = '/auth/profile/{{ item.id }}'">
+      <th>{{ item.username }}</th>
+      <td style="background: {{ item.profile_background }}">{{ item.profile_background }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock content %}

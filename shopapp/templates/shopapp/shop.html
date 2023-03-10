@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}
+  Магазин
+{% endblock title %}
+{% block content %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Название</th>
+      <th scope="col">Тип</th>
+      <th scope="col">Цвет</th>
+      <th scope="col">Цена</th>
+      <th scope="col">#</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in shop_items %}
+    <tr>
+      <th>{{ item.name }}</th>
+      <td>{{ item.type }}</td>
+      <td style="background: {{ item.color }};"></td>
+      <td>{{ item.price }}</td>
+      <td>
+        {% if item in user_items %}
+          Уже имеется
+        {% else %}
+        <a href="{% url 'shopapp:items' %}?buy={{ item.id }}" class="btn btn-success">Купить</a>
+        {% endif %}
+
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock content %}

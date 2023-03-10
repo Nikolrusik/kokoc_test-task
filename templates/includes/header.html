@@ -15,18 +15,22 @@
                     <a class="nav-link {% if request.resolver_match.view_name == 'mainapp:all_results' %} active {% endif %}" href="{% url 'mainapp:all_results' %}">Пройденные опросы</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.view_name == 'mainapp:shop' %} active {% endif %}" href="{% url 'mainapp:shop' %}">Магазин</a>
+                    <a class="nav-link {% if request.resolver_match.view_name == 'shop:items' %} active {% endif %}" href="{% url 'shopapp:items' %}">Магазин</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.view_name == 'mainapp:my_items' %} active {% endif %}" href="{% url 'mainapp:my_items' %}">Мои раскраски</a>
+                    <a class="nav-link {% if request.resolver_match.view_name == 'shop:user_items' %} active {% endif %}" href="{% url 'shopapp:user_items' %}">Мои раскраски</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.view_name == 'authapp:users' %} active {% endif %}" href="{% url 'authapp:users' %}">Пользователи</a>
+                </li>
+
             </ul>
             <div>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     {% if request.user.is_authenticated %}
                     <li class="nav-item" style="border: 2px solid {{ request.user.border_color }};">
-                           <a class="nav-link" href="">Переход в профиль: {{ request.user }}</a>
-                           <a class="nav-link" href="">Текущий баланс: {{ request.user.balance }}</a>
+                           <a href="{% url 'authapp:profile' pk=request.user.id %}" class="nav-link" href="">Переход в профиль: {{ request.user }}</a>
+                           <a href="{% url 'authapp:profile' pk=request.user.id %}" class="nav-link" href="">Текущий баланс: {{ request.user.balance }}</a>
 
                     </li>
                     {% endif %}
