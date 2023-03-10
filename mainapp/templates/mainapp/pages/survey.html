@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+  <h1>{{ quest.survey.name }}</h1>
+  {% if quest.id == next_quest.id %}
+  <p class="lead">
+    <b>Описание опроса:</b> {{ quest.survey.description }}
+  </p>
+  <p class="lead">
+    <b>Условия:</b> За прохождение опроса Вам единоразово начислится вознаграждение в сумме: {{ quest.survey.award }} выдуманной валюты.
+    С помощью этой валюты Вы можете приобретать цвет рамки никнейма или фона шапки на странице профиляю.
+    В процессе прохождения опроса вы можете вернуться к предыдущему вопросу и ответить иначе, это не повлияет на получения вознагрождения.
+  </p>
+
+  <a href="{% url 'mainapp:survey' survey_id=quest.survey.id quest_id=next_quest.id %}?start=1" class="btn btn-primary">Начать прохождение</a>
+  {% else %}
+  <h3>{{ quest.quest }}</h3>
+ <form method="POST">
+  {% csrf_token %}
+  <div class="mb-3">
+    <input hidden name="quest_id" value="{{ quest.id }}"/>
+    <input hidden name="survey_id" value="{{ quest.survey.id }}"/>
+    <input hidden name="next_quest" value="{{ next_quest.id }}"/>
+    {% for answer in answers %}
+    <div class="form-check">
+      <input class="form-check-input" name="answer" type="radio" value="{{ answer.id }}" id="{{ answer.id }}" />
+      <label class="form-check-label" for="{{ answer.id }}">
+        {{ answer.answer }}
+      </label>
+    </div>
+   {% endfor %}
+   {% if next_quest %}
+  <button type="submit" class="btn btn-primary">Отправить</button>
+  {% else %}
+  <button type="submit" class="btn btn-primary">Завершить</button>
+  {% endif %}
+  </div>
+</form>
+{% endif %}
+
+{% endblock content %}

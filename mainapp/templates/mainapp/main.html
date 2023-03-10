@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Название опроса</th>
+      <th scope="col">Описание опроса</th>
+      <th scope="col">Вознаграждение</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for survey in surveys %}
+    <tr onclick="document.location = '/survey/{{ survey.id }}/0'">
+      <th scope="row">{{ survey.id }}</th>
+      <td>{{ survey.name }}</td>
+      <td>{{ survey.description }}</td>
+      <td>{{ survey.award }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock content %}

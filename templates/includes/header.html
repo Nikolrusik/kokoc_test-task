@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Eighth navbar example">
     <div class="container">
-        <a class="navbar-brand" href="{# url 'test_app:tests' #}">Test service</a>
+        <a class="navbar-brand" href="{% url 'mainapp:main' %}">Kokoc Group Test Task</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" aria-expanded="false"
             aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -17,9 +17,13 @@
             </ul>
             <div>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                           {{ user }}
+                    </li>
+                    {% endif %}
                     <li class="nav-item btn btn-danger">
                         {% if request.user.is_authenticated %}
-                        {{ user }}
                         <a class="nav-link active" href="{% url 'authapp:logout' %}">Выйти</a>
                         {% else %}
                         <a class="nav-link active" href="{% url 'authapp:login' %}">Войти</a>
