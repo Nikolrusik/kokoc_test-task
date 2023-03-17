@@ -1,3 +1,4 @@
+from typing import Dict, Any
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
 from django.contrib.auth.views import LoginView
@@ -10,19 +11,19 @@ from mainapp import models as mainapp_models
 
 
 class RegiserView(CreateView):
-    model = get_user_model()
-    form_class = forms.RegisterForm
-    success_url = reverse_lazy("mainapp:main")
+    model: Any = get_user_model()
+    form_class: Any = forms.RegisterForm
+    success_url: str = reverse_lazy("mainapp:main")
 
 
 class CustomLoginView(LoginView):
-    template_name = "authapp/login.html"
+    template_name: str = "authapp/login.html"
 
 
 class ProfileView(TemplateView):
-    template_name = "authapp/profile.html"
+    template_name: str  = "authapp/profile.html"
 
-    def get_context_data(self, pk=None, **kwargs):
+    def get_context_data(self, pk: int = None, **kwargs: Any) -> Dict[str, Any]:
         context = super(ProfileView, self).get_context_data(**kwargs)
         context["viewed_user"] = models.AbstractUserModel.objects.get(id=pk)
         context["surveys"] = mainapp_models.CompletedSurveyModel.objects.filter(
@@ -31,9 +32,9 @@ class ProfileView(TemplateView):
 
 
 class UsersView(TemplateView):
-    template_name = "authapp/user_list.html"
-
-    def get_context_data(self, **kwargs):
+    template_name: str = "authapp/user_list.html"
+    
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super(UsersView, self).get_context_data(**kwargs)
         context['all_users'] = models.AbstractUserModel.objects.all()
         return context
