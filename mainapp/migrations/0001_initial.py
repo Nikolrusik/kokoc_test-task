@@ -17,61 +17,77 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='AnswerModel',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('answer', models.TextField(verbose_name='Answer')),
             ],
         ),
         migrations.CreateModel(
             name='CompletedSurveyModel',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('status', models.CharField(choices=[('COMPLETED', 'Completed'), ('STARTED', 'Started')], default='STARTED', max_length=255, verbose_name='Survey status')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('status', models.CharField(choices=[('COMPLETED', 'Completed'), (
+                    'STARTED', 'Started')], default='STARTED', max_length=255, verbose_name='Survey status')),
             ],
         ),
         migrations.CreateModel(
             name='QuestionModel',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('quest', models.TextField(verbose_name='Quest')),
             ],
         ),
         migrations.CreateModel(
             name='SurveyModel',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255, verbose_name='Survey name')),
-                ('description', models.TextField(blank=True, null=True, verbose_name='Question description')),
-                ('award', models.FloatField(default=0.0, verbose_name='Question award')),
+                ('description', models.TextField(blank=True,
+                 null=True, verbose_name='Question description')),
+                ('award', models.FloatField(
+                    default=0.0, verbose_name='Question award')),
             ],
         ),
         migrations.CreateModel(
             name='ResultModel',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('answer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='mainapp.answermodel')),
-                ('quest', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='mainapp.questionmodel')),
-                ('survey', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='mainapp.completedsurveymodel')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('answer', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='mainapp.answermodel')),
+                ('quest', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='mainapp.questionmodel')),
+                ('survey', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='mainapp.completedsurveymodel')),
+                ('user', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(
             model_name='questionmodel',
             name='survey',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='mainapp.surveymodel'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to='mainapp.surveymodel'),
         ),
         migrations.AddField(
             model_name='completedsurveymodel',
             name='survey',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='mainapp.surveymodel'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to='mainapp.surveymodel'),
         ),
         migrations.AddField(
             model_name='completedsurveymodel',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='answermodel',
             name='quest',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='mainapp.questionmodel'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to='mainapp.questionmodel'),
         ),
     ]
