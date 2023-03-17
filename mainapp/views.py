@@ -33,37 +33,45 @@ class SurveyPage(LoginUrlUpdate, TemplateView):
             quest_id=context['quest'].id)
 
         if self.request.GET.get('start'):  # To avoid making a request every time
-            if main_models.CompletedSurveyModel.objects.filter(survey__id=survey_id).exists() != True:
+            if not main_models.CompletedSurveyModel.objects.filter(survey__id=survey_id).exists():
                 new_completed = main_models.CompletedSurveyModel.objects.create(
                     survey_id=survey_id, user=self.request.user, status='STARTED')
                 new_completed.save()
         return context
 
-    def post(self, request: HttpRequest) -> HttpResponseRedirect:
-        if request.POST.get('answer'):
-            survey_id: int = int(request.POST.get('survey_id'))
-            quest_id: int = int(request.POST.get('quest_id'))
-            answer_id: int = int(request.POST.get('answer'))
-            next_quest: int = int(request.POST.get('next_quest'))
-            completed_survey: main_models.CompletedSurveyModel = main_models.CompletedSurveyModel.objects.get(
-                survey__id=survey_id, user=request.user)
-            if main_models.ResultModel.objects.filter(survey=completed_survey, quest__id=quest_id, user=request.user).exists():
-                main_models.ResultModel.objects.filter(
-                    survey=completed_survey, quest__id=quest_id, user=request.user).update(answer_id=answer_id)
-            else:
-                new_result: main_models.ResultModel = main_models.ResultModel.objects.create(
-                    survey=completed_survey, quest_id=quest_id, user=request.user, answer_id=answer_id)
-                new_result.save()
-            if next_quest:
-                return HttpResponseRedirect(f'/mainapp/survey/{survey_id}/{next_quest}/')
-            else:
-                if main_models.CompletedSurveyModel.objects.filter(user=request.user, survey__id=survey_id, status="STARTED").exists():
-                    request.user.balance = request.user.balance + \
-                        main_models.SurveyModel.objects.get(id=survey_id).award
-                    request.user.save()
-                main_models.CompletedSurveyModel.objects.filter(
-                    user=request.user, survey__id=survey_id).update(status="COMPLETED")
-                return HttpResponseRedirect(f'/mainapp/result/{completed_survey.id}')
+    def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseRedirect:
+        if not request.POST.get('answer'):
+            context = self.get_context_data(**kwargs)
+            return self.render_to_response(context)
+    
+        survey_id: int = int(request.POST.get('survey_id'))
+        quest_id: int = int(request.POST.get('quest_id'))
+        answer_id: int = int(request.POST.get('answer'))
+        next_quest: int = int(request.POST.get('next_quest'))
+        completed_survey: main_models.CompletedSurveyModel = main_models.CompletedSurveyModel.objects.get(
+            survey__id=survey_id, user=request.user)
+        
+        result, created = main_models.ResultModel.objects.get_or_create(
+            survey=completed_survey, 
+            quest_id=quest_id, 
+            user=request.user, 
+            defaults={'answer_id':answer_id}
+        )
+        
+        if not created:
+            result.answer_id = answer_id
+            result.save()
+
+        if next_quest:
+            return HttpResponseRedirect(f'/mainapp/survey/{survey_id}/{next_quest}/')
+        else:
+            if main_models.CompletedSurveyModel.objects.filter(user=request.user, survey__id=survey_id, status="STARTED").exists():
+                request.user.balance = request.user.balance + \
+                    main_models.SurveyModel.objects.get(id=survey_id).award
+                request.user.save()
+            main_models.CompletedSurveyModel.objects.filter(
+                user=request.user, survey__id=survey_id).update(status="COMPLETED")
+            return HttpResponseRedirect(f'/mainapp/result/{completed_survey.id}')
 
 
 class ResultsPage(LoginUrlUpdate, TemplateView):
