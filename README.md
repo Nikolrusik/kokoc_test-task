@@ -34,7 +34,7 @@ pip install requirements.txt
 Выполните следующие команды, чтобы у вас отобразились тестовые данные и запустился сервер:
 
 ```
-python3 manage,py migrate
+python3 manage.py migrate
 python3 manage.py loaddata dump.json
 python3 manage.py runserver
 ```
