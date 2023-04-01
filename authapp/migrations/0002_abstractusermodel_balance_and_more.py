@@ -19,26 +19,31 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='abstractusermodel',
             name='border_color',
-            field=models.CharField(default='#FFFFFF', max_length=255, verbose_name='Border color'),
+            field=models.CharField(
+                default='#FFFFFF', max_length=255, verbose_name='Border color'),
         ),
         migrations.AddField(
             model_name='abstractusermodel',
             name='groups',
-            field=models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.group', verbose_name='groups'),
+            field=models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
+                                         related_name='user_set', related_query_name='user', to='auth.group', verbose_name='groups'),
         ),
         migrations.AddField(
             model_name='abstractusermodel',
             name='is_superuser',
-            field=models.BooleanField(default=False, verbose_name='Superuser status'),
+            field=models.BooleanField(
+                default=False, verbose_name='Superuser status'),
         ),
         migrations.AddField(
             model_name='abstractusermodel',
             name='profile_background',
-            field=models.CharField(default='#FFFFFF', max_length=255, verbose_name='Background profile'),
+            field=models.CharField(
+                default='#FFFFFF', max_length=255, verbose_name='Background profile'),
         ),
         migrations.AddField(
             model_name='abstractusermodel',
             name='user_permissions',
-            field=models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.permission', verbose_name='user permissions'),
+            field=models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set',
+                                         related_query_name='user', to='auth.permission', verbose_name='user permissions'),
         ),
     ]

@@ -15,12 +15,18 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='AbstractUserModel',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('password', models.CharField(max_length=128, verbose_name='password')),
-                ('last_login', models.DateTimeField(blank=True, null=True, verbose_name='last login')),
-                ('username', models.CharField(max_length=255, unique=True, verbose_name='Username')),
-                ('email', models.EmailField(max_length=254, unique=True, verbose_name='Email')),
-                ('is_staff', models.BooleanField(default=False, verbose_name='Staff status')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('password', models.CharField(
+                    max_length=128, verbose_name='password')),
+                ('last_login', models.DateTimeField(
+                    blank=True, null=True, verbose_name='last login')),
+                ('username', models.CharField(max_length=255,
+                 unique=True, verbose_name='Username')),
+                ('email', models.EmailField(max_length=254,
+                 unique=True, verbose_name='Email')),
+                ('is_staff', models.BooleanField(
+                    default=False, verbose_name='Staff status')),
             ],
             options={
                 'abstract': False,

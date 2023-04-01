@@ -6,9 +6,11 @@ class QuestsInline(admin.StackedInline):
     model = models.QuestionModel
     extra = 5
 
+
 class AnswerInline(admin.StackedInline):
     model = models.AnswerModel
     extra = 4
+
 
 @admin.register(models.QuestionModel)
 class QuestionModelAdmin(admin.ModelAdmin):
